@@ -122,15 +122,42 @@ func writeTable(tableCfg TableConfig, cfg config, client *greptime.Client, wg *s
 		}
 
 		// Define table schema
-		tbl.AddFieldColumn("ip", types.STRING)
-		tbl.AddFieldColumn("http_method", types.STRING)
-		tbl.AddFieldColumn("path", types.STRING)
-		tbl.AddFieldColumn("http_version", types.STRING)
-		tbl.AddFieldColumn("status_code", types.INT32)
-		tbl.AddFieldColumn("body_bytes_sent", types.INT32)
-		tbl.AddFieldColumn("referrer", types.STRING)
-		tbl.AddFieldColumn("user_agent", types.STRING)
-		tbl.AddTimestampColumn("time_local", types.TIMESTAMP_MILLISECOND)
+		err = tbl.AddFieldColumn("ip", types.STRING)
+		if err != nil {
+			log.Panic(err)
+		}
+		err = tbl.AddFieldColumn("http_method", types.STRING)
+		if err != nil {
+			log.Panic(err)
+		}
+		err = tbl.AddFieldColumn("path", types.STRING)
+		if err != nil {
+			log.Panic(err)
+		}
+		err = tbl.AddFieldColumn("http_version", types.STRING)
+		if err != nil {
+			log.Panic(err)
+		}
+		err = tbl.AddFieldColumn("status_code", types.INT32)
+		if err != nil {
+			log.Panic(err)
+		}
+		err = tbl.AddFieldColumn("body_bytes_sent", types.INT32)
+		if err != nil {
+			log.Panic(err)
+		}
+		err = tbl.AddFieldColumn("referrer", types.STRING)
+		if err != nil {
+			log.Panic(err)
+		}
+		err = tbl.AddFieldColumn("user_agent", types.STRING)
+		if err != nil {
+			log.Panic(err)
+		}
+		err = tbl.AddTimestampColumn("time_local", types.TIMESTAMP_MILLISECOND)
+		if err != nil {
+			log.Panic(err)
+		}
 
 		// Generate random data
 		rows := gofakeit.Number(cfg.MinRow, maxRow)
