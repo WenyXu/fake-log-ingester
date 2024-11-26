@@ -12,7 +12,7 @@ import (
 	"github.com/GreptimeTeam/greptimedb-ingester-go/table"
 	"github.com/GreptimeTeam/greptimedb-ingester-go/table/types"
 	"github.com/brianvoe/gofakeit/v6"
-	"github.com/caarlos0/env/v6"
+	"github.com/caarlos0/env/v11"
 )
 
 type config struct {
@@ -37,6 +37,7 @@ type config struct {
 	Port             int     `env:"DB_PORT" envDefault:"5001"`
 	Username         string  `env:"DB_USERNAME" envDefault:""`
 	Password         string  `env:"DB_PASSWORD" envDefault:""`
+	Insecure         bool    `env:"INSECURE" envDefault:"false"`
 }
 
 type TableConfig struct {
@@ -58,7 +59,7 @@ func main() {
 	db_cfg := greptime.NewConfig(cfg.Host).
 		WithDatabase(cfg.Database).
 		WithPort(cfg.Port).
-		WithInsecure(false).
+		WithInsecure(cfg.Insecure).
 		WithAuth(cfg.Username, cfg.Password)
 	client, err := greptime.NewClient(db_cfg)
 	if err != nil {

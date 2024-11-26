@@ -19,3 +19,9 @@ go.work
 
 # Binary
 fake-log-ingester
+
+# editor and IDE paraphernalia
+.idea
+*.swp
+*.swo
+*~
