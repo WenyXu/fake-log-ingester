@@ -11,31 +11,33 @@ import (
 	greptime "github.com/GreptimeTeam/greptimedb-ingester-go"
 	"github.com/GreptimeTeam/greptimedb-ingester-go/table"
 	"github.com/GreptimeTeam/greptimedb-ingester-go/table/types"
+	"github.com/brianvoe/gofakeit/v6"
+	"github.com/caarlos0/env/v11"
 )
 
 type config struct {
-	Rate               float32 `env:"RATE" envDefault:"2"`
-	IPv4Percent        int     `env:"IPV4_PERCENT" envDefault:"100"`
-	StatusOkPercent    int     `env:"STATUS_OK_PERCENT" envDefault:"80"`
-	PathMinLength      int     `env:"PATH_MIN" envDefault:"1"`
-	PathMaxLength      int     `env:"PATH_MAX" envDefault:"5"`
-	PercentageGet      int     `env:"GET_PERCENT" envDefault:"60"`
-	PercentagePost     int     `env:"POST_PERCENT" envDefault:"30"`
-	PercentagePut      int     `env:"PUT_PERCENT" envDefault:"0"`
-	PercentagePatch    int     `env:"PATCH_PERCENT" envDefault:"0"`
-	PercentageDelete   int     `env:"DELETE_PERCENT" envDefault:"0"`
-	MinRow             int     `env:"MIN_ROW" envDefault:"5"`
-	MaxRow             int     `env:"MAX_ROW" envDefault:"100"`
-	TableNum           int     `env:"TABLE_NUM" envDefault:"10"`
-	BurstMultiplier    float32 `env:"BURST_MULTIPLIER" envDefault:"10"`
-	BurstDuration      int     `env:"BURST_DURATION" envDefault:"30"`
-	CycleDuration      int     `env:"CYCLE_DURATION" envDefault:"60"`
-	Host               string  `env:"DB_HOST" envDefault:""`
-	Database           string  `env:"DATABASE" envDefault:""`
-	Port               int     `env:"DB_PORT" envDefault:"5001"`
-	Username           string  `env:"DB_USERNAME" envDefault:""`
-	Password           string  `env:"DB_PASSWORD" envDefault:""`
-	InsecureSkipVerify bool    `env:"INSECURE_SKIP_VERIFY" envDefault:"false"`
+	Rate             float32 `env:"RATE" envDefault:"2"`
+	IPv4Percent      int     `env:"IPV4_PERCENT" envDefault:"100"`
+	StatusOkPercent  int     `env:"STATUS_OK_PERCENT" envDefault:"80"`
+	PathMinLength    int     `env:"PATH_MIN" envDefault:"1"`
+	PathMaxLength    int     `env:"PATH_MAX" envDefault:"5"`
+	PercentageGet    int     `env:"GET_PERCENT" envDefault:"60"`
+	PercentagePost   int     `env:"POST_PERCENT" envDefault:"30"`
+	PercentagePut    int     `env:"PUT_PERCENT" envDefault:"0"`
+	PercentagePatch  int     `env:"PATCH_PERCENT" envDefault:"0"`
+	PercentageDelete int     `env:"DELETE_PERCENT" envDefault:"0"`
+	MinRow           int     `env:"MIN_ROW" envDefault:"5"`
+	MaxRow           int     `env:"MAX_ROW" envDefault:"100"`
+	TableNum         int     `env:"TABLE_NUM" envDefault:"10"`
+	BurstMultiplier  float32 `env:"BURST_MULTIPLIER" envDefault:"10"`
+	BurstDuration    int     `env:"BURST_DURATION" envDefault:"30"`
+	CycleDuration    int     `env:"CYCLE_DURATION" envDefault:"60"`
+	Host             string  `env:"DB_HOST" envDefault:""`
+	Database         string  `env:"DATABASE" envDefault:""`
+	Port             int     `env:"DB_PORT" envDefault:"5001"`
+	Username         string  `env:"DB_USERNAME" envDefault:""`
+	Password         string  `env:"DB_PASSWORD" envDefault:""`
+	Insecure         bool    `env:"INSECURE" envDefault:"false"`
 }
 
 type TableConfig struct {
@@ -57,7 +59,7 @@ func main() {
 	db_cfg := greptime.NewConfig(cfg.Host).
 		WithDatabase(cfg.Database).
 		WithPort(cfg.Port).
-		WithInsecure(cfg.InsecureSkipVerify).
+		WithInsecure(cfg.Insecure).
 		WithAuth(cfg.Username, cfg.Password)
 	client, err := greptime.NewClient(db_cfg)
 	if err != nil {

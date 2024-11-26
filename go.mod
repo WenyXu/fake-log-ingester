@@ -10,6 +10,8 @@ require (
 
 require (
 	github.com/GreptimeTeam/greptime-proto v0.7.0 // indirect
+	github.com/caarlos0/env v3.5.0+incompatible
+	github.com/caarlos0/env/v11 v11.2.2
 	github.com/go-logr/logr v1.4.1 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
